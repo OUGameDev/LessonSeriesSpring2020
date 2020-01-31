@@ -10,7 +10,7 @@ public class Enemy1 : BaseEnemy
 
         maxHealth = 5;
         currentHealth = maxHealth;
-        speed = 10f;
+        speed = 3f;
         agent.speed = speed;
     }
 

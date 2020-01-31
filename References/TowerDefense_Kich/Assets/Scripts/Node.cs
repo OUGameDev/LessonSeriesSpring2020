@@ -22,4 +22,9 @@ public class Node : MonoBehaviour
     {
         return isOccupied;
     }
+
+    public void SetOccupied(bool set)
+    {
+        isOccupied = set;
+    }
 }

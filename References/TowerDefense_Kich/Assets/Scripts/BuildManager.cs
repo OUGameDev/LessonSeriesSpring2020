@@ -13,6 +13,7 @@ public class BuildManager : MonoBehaviour
         Vector3 position = node.GetBuildPosition();
 
         Instantiate(building, position, Quaternion.identity);
+        node.SetOccupied(true);
         surface.BuildNavMesh();
     }
 }

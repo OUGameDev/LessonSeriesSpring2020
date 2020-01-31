@@ -14,7 +14,6 @@ public class Player : MonoBehaviour, IDamageable
     private int passiveIncomeRateInSeconds = 5;
     private float time;
 
-
     private bool isDead;
 
     private void Start()
@@ -67,6 +66,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         return currentHealth;
     }
+
     public int GetGold()
     {
         return currentGold;

@@ -3,42 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum ItemSelect { barrier };
+
 public class Store : MonoBehaviour
 {
     private BuildManager buildManager;
     private Player player;
-    private UIManager ui;
+
+    public ItemSelect item;
 
     public GameObject barrierPrefab;
     private int barrierCost = 5;
 
-
-    private float rayDist = 1000f;
+    private const float RAYDIST = 1000f;
 
     private void Start()
     {
         buildManager = GetComponent<BuildManager>();
         player = GetComponent<Player>();
-        ui = GetComponent<UIManager>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (ui.isBarrierSelected)
-            {
-                BuildBarrier();
-            }
-        }
-    }
-
-    private void BuildBarrier()
+    public void PurchaseBarrier()
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, rayDist))
+        if (Physics.Raycast(ray, out RaycastHit hit, RAYDIST))
         {
             // Select node
             if (hit.collider.gameObject.tag == "Node")

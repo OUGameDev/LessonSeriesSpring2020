@@ -7,22 +7,34 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     private Player player;
+    private Store store;
 
     public TextMeshProUGUI livesTxt;
     public TextMeshProUGUI goldTxt;
     public TextMeshProUGUI waveTxt;
 
     public Button BarrierBtn;
-    public bool isBarrierSelected;
 
     private void Start()
     {
         player = GetComponent<Player>();
-
-        isBarrierSelected = false;
+        store = GetComponent<Store>();
     }
 
     private void Update()
+    {
+        UpdateTexts();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (store.item == ItemSelect.barrier)
+            {
+                store.PurchaseBarrier();
+            }
+        }
+    }
+
+    private void UpdateTexts()
     {
         livesTxt.text = "Lives: " + player.GetLives();
         goldTxt.text = "Gold: " + player.GetGold();
@@ -30,8 +42,6 @@ public class UIManager : MonoBehaviour
 
     public void OnBarrierBtn()
     {
-        isBarrierSelected = true;
-
-        // Set others to false
+        store.item = ItemSelect.barrier;
     }
 }
