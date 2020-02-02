@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum ItemSelect { barrier };
+public enum ItemSelect { clear, barrier, sell };
 
 public class Store : MonoBehaviour
 {
+    public ItemSelect item;
+
     private BuildManager buildManager;
     private Player player;
 
-    public ItemSelect item;
-
     public GameObject barrierPrefab;
-    private int barrierCost = 5;
 
     private const float RAYDIST = 1000f;
 
@@ -21,41 +20,81 @@ public class Store : MonoBehaviour
     {
         buildManager = GetComponent<BuildManager>();
         player = GetComponent<Player>();
+
+        item = ItemSelect.clear;
     }
 
-    public void PurchaseBarrier()
+    public void PurchaseBuilding(ItemSelect item)
     {
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, RAYDIST))
         {
-            // Select node
             if (hit.collider.gameObject.tag == "Node")
             {
                 Node node = hit.collider.gameObject.GetComponent<Node>();
 
-                // Check if node is free
-                if (node.IsOccupied())
+                if (!node.IsOccupied())
                 {
-                    Debug.Log("Occupied node");
-                }
-                // Check if player has enough gold to purchase
-                if (player.CanPurchase(barrierCost))
-                {
-                    Debug.Log("Purchased barrier");
+                    GameObject toBuild = SelectBuilding(item);
+                    if (toBuild != null)
+                    {
+                        if (player.CanPurchase(toBuild.GetComponent<Building>().cost))
+                        {
+                            buildManager.Build(node, toBuild);
 
-                    buildManager.Build(node, barrierPrefab);
+                            Debug.Log("Purchased barrier");
+                        }
+                        else
+                            Debug.Log("Not enough gold");
+                    }
                 }
                 else
-                {
-                    Debug.Log("Not enough gold");
-                }
+                    Debug.Log("Node is occupied");
             }
             else
-            {
                 Debug.Log("Cannot place barrier on " + hit.collider.name);
+        }
+    }
+
+    public void SellBuilding()
+    {
+        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, RAYDIST))
+        {
+            if (hit.collider.gameObject.tag == "Node")
+            {
+                Node node = hit.collider.gameObject.GetComponent<Node>();
+
+                if (node.IsOccupied())
+                {
+                    GameObject toSell = node.GetBuilding();
+
+                    if (toSell != null)
+                    {
+                        
+                        player.SellBuilding(toSell);
+                        buildManager.Sell(node);
+
+                        Debug.Log("Sold " + toSell.name);
+                    }
+                }
+                else
+                    Debug.Log("No building to sell");
             }
         }
+    }
+
+    private GameObject SelectBuilding(ItemSelect item)
+    {
+        if (item == ItemSelect.barrier)
+        {
+            return barrierPrefab;
+        }
+
+        return null;
     }
 }

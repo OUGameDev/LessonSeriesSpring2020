@@ -5,7 +5,8 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     private Vector3 buildPosition;
-    private bool isOccupied;
+    public bool isOccupied;
+    public GameObject building;
 
     private void Start()
     {
@@ -26,5 +27,15 @@ public class Node : MonoBehaviour
     public void SetOccupied(bool set)
     {
         isOccupied = set;
+    }
+
+    public void SetBuilding(GameObject toSet)
+    {
+        building = toSet;
+    }
+
+    public GameObject GetBuilding()
+    {
+        return building;
     }
 }

@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI goldTxt;
     public TextMeshProUGUI waveTxt;
 
+    private ItemSelect item;
+
     public Button BarrierBtn;
 
     private void Start()
@@ -29,7 +31,12 @@ public class UIManager : MonoBehaviour
         {
             if (store.item == ItemSelect.barrier)
             {
-                store.PurchaseBarrier();
+                item = ItemSelect.barrier;
+                store.PurchaseBuilding(item);
+            }
+            if (store.item == ItemSelect.sell)
+            {
+                store.SellBuilding();
             }
         }
     }
@@ -40,8 +47,18 @@ public class UIManager : MonoBehaviour
         goldTxt.text = "Gold: " + player.GetGold();
     }
 
+    public void OnCancelBtn()
+    {
+        store.item = ItemSelect.clear;
+    }
+
     public void OnBarrierBtn()
     {
         store.item = ItemSelect.barrier;
+    }
+
+    public void OnSellBtn()
+    {
+        store.item = ItemSelect.sell;
     }
 }

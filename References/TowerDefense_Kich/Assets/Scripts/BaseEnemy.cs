@@ -26,7 +26,6 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         isDead = false;
     }
 
-
     protected bool HasReachedDestination()
     {
         if (!agent.pathPending)

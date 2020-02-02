@@ -20,7 +20,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         maxHealth = 100;
         currentHealth = maxHealth;
-        initialGold = 20;
+        initialGold = 99999999;
         currentGold = initialGold;
 
         time = 0;
@@ -37,6 +37,11 @@ public class Player : MonoBehaviour, IDamageable
             currentGold += passiveIncome;
             time = 0;
         }
+
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+        }
     }
 
     public bool CanPurchase(int cost)
@@ -50,6 +55,16 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         return false;
+    }
+
+    public void SellBuilding(GameObject building)
+    {
+        int sell = building.GetComponent<Building>().sell;
+
+        if (sell >= 0)
+        {
+            currentGold += sell;
+        }
     }
 
     public void TakeDamage(int damage)
