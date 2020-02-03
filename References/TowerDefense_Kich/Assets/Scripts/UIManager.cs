@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : UnityEngine.MonoBehaviour
 {
     private Player player;
     private Store store;
+    private WaveManager waveManager;
 
     public TextMeshProUGUI livesTxt;
     public TextMeshProUGUI goldTxt;
@@ -15,12 +16,11 @@ public class UIManager : MonoBehaviour
 
     private ItemSelect item;
 
-    public Button BarrierBtn;
-
     private void Start()
     {
         player = GetComponent<Player>();
         store = GetComponent<Store>();
+        waveManager = GetComponent<WaveManager>();
     }
 
     private void Update()
@@ -45,6 +45,13 @@ public class UIManager : MonoBehaviour
     {
         livesTxt.text = "Lives: " + player.GetLives();
         goldTxt.text = "Gold: " + player.GetGold();
+        waveTxt.text = "Wave: " + waveManager.GetWaveIndex();
+    }
+
+    public void OnNextWaveBtn()
+    {
+        if (waveManager.numEnemiesAlive <= 0 && !waveManager.waveInProgress)
+            waveManager.nextWaveReady = true;
     }
 
     public void OnCancelBtn()

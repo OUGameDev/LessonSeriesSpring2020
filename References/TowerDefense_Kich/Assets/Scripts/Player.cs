@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    private GameManager gameManager;
+
     private int maxHealth;
     private int currentHealth;
     private int initialGold;
@@ -18,7 +17,9 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        maxHealth = 100;
+        gameManager = GetComponent<GameManager>();
+
+        maxHealth = 9999;
         currentHealth = maxHealth;
         initialGold = 99999999;
         currentGold = initialGold;
@@ -38,9 +39,9 @@ public class Player : MonoBehaviour, IDamageable
             time = 0;
         }
 
-        if (currentHealth <= 0)
+        if (isDead)
         {
-            isDead = true;
+            gameManager.GameOver();
         }
     }
 
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             isDead = true;
         }
     }

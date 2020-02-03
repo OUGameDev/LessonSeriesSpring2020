@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class BaseEnemy : MonoBehaviour, IDamageable
@@ -10,23 +8,47 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
     protected float speed = 1f;
 
     protected Player player;
+    protected WaveManager waveManager;
     protected NavMeshAgent agent;
+    protected GameObject spawn;
     protected GameObject destination;
+
+    private float agentStoppingDistance = 2f;
+
 
     protected bool isDead;
 
     protected void Start()
     {
         player = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Player>();
-        agent = GetComponent<NavMeshAgent>();
+        waveManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<WaveManager>();
+        spawn = GameObject.FindGameObjectWithTag("Spawn");
         destination = GameObject.FindGameObjectWithTag("Destination");
 
+        agent = GetComponent<NavMeshAgent>();
+
+        agent.stoppingDistance = agentStoppingDistance;
         agent.SetDestination(destination.transform.position);
         
         isDead = false;
     }
 
-    protected bool HasReachedDestination()
+    protected void Update()
+    {
+        if (isDead)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if (HasReachedDestination())
+        {
+            Destroy(gameObject);
+            player.TakeDamage(currentHealth);
+            return;
+        }
+    }
+
+    protected virtual bool HasReachedDestination()
     {
         if (!agent.pathPending)
         {
@@ -41,7 +63,7 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         return false;
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
@@ -49,5 +71,10 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         {
             isDead = true;
         }
+    }
+
+    private void OnDestroy()
+    {
+        waveManager.numEnemiesAlive--;
     }
 }

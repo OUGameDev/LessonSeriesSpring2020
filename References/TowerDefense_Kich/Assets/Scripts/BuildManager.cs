@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BuildManager : MonoBehaviour
+public class BuildManager : UnityEngine.MonoBehaviour
 {
     public NavMeshSurface surface;
 

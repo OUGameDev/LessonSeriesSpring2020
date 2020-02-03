@@ -8,6 +8,7 @@ TagManager:
   - Destination
   - Node
   - Barrier
+  - Spawn
   layers:
   - Default
   - TransparentFX

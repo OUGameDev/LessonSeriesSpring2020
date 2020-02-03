@@ -1,12 +1,16 @@
-﻿public class Enemy1 : BaseEnemy
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy2 : BaseEnemy
 {
     private new void Start()
     {
         base.Start();
 
-        maxHealth = 5;
+        maxHealth = 7;
         currentHealth = maxHealth;
-        speed = 3f;
+        speed = 5f;
         agent.speed = speed;
     }
 

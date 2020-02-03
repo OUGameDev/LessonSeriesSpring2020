@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
-public enum ItemSelect { clear, barrier, sell };
+public enum ItemSelect { clear, barrier, tower, sell };
 
 public class Store : MonoBehaviour
 {
@@ -38,6 +35,7 @@ public class Store : MonoBehaviour
                 if (!node.IsOccupied())
                 {
                     GameObject toBuild = SelectBuilding(item);
+
                     if (toBuild != null)
                     {
                         if (player.CanPurchase(toBuild.GetComponent<Building>().cost))
