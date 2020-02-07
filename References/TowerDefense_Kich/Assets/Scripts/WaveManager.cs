@@ -1,22 +1,21 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class WaveManager : MonoBehaviour
 {
+    [Header("Enemy Types")]
     public GameObject enemy1;
     public GameObject enemy2;
     public GameObject enemy3;
 
+    [Header("Spawn")]
     public GameObject spawn;
 
-    public Wave wave;
-
+    [Header("Wave Info")]
+    private Wave wave;
     private int waveIndex;
     public int numEnemiesAlive;
     public float rateOfSpawn;
-
     public bool nextWaveReady;
     public bool waveInProgress;
 

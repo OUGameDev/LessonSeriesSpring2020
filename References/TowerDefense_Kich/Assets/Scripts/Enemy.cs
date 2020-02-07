@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class BaseEnemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, IDamageable
 {
-    protected int maxHealth = 10;
-    protected int currentHealth;
-    protected float speed = 1f;
+    private Player player;
+    private WaveManager waveManager;
+    private NavMeshAgent agent;
+    private GameObject spawn;
+    private GameObject destination;
 
-    protected Player player;
-    protected WaveManager waveManager;
-    protected NavMeshAgent agent;
-    protected GameObject spawn;
-    protected GameObject destination;
+    public int maxHealth = 10;
+    private int currentHealth;
+    public float speed = 1f;
+
+    public int gold = 1;
 
     private float agentStoppingDistance = 2f;
 
-
-    protected bool isDead;
+    private bool isDead;
 
     protected void Start()
     {
@@ -26,18 +27,21 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         destination = GameObject.FindGameObjectWithTag("Destination");
 
         agent = GetComponent<NavMeshAgent>();
-
+        agent.speed = speed;
         agent.stoppingDistance = agentStoppingDistance;
         agent.SetDestination(destination.transform.position);
+
+        currentHealth = maxHealth;
         
         isDead = false;
     }
 
-    protected void Update()
+    private void Update()
     {
         if (isDead)
         {
             Destroy(gameObject);
+            player.LootEnemy(gold);
             return;
         }
         if (HasReachedDestination())
@@ -48,7 +52,7 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         }
     }
 
-    protected virtual bool HasReachedDestination()
+    private bool HasReachedDestination()
     {
         if (!agent.pathPending)
         {
@@ -63,7 +67,7 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         return false;
     }
 
-    public virtual void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
@@ -71,6 +75,11 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         {
             isDead = true;
         }
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
     }
 
     private void OnDestroy()

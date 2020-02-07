@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum ItemSelect { clear, barrier, tower, sell };
+public enum ItemSelect { clear, barrier, tower1, sell };
 
 public class Store : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class Store : MonoBehaviour
     private Player player;
 
     public GameObject barrierPrefab;
+    public GameObject tower1Prefab;
 
     private const float RAYDIST = 1000f;
 
@@ -42,7 +43,7 @@ public class Store : MonoBehaviour
                         {
                             buildManager.Build(node, toBuild);
 
-                            Debug.Log("Purchased barrier");
+                            Debug.Log("Purchased " + toBuild.name);
                         }
                         else
                             Debug.Log("Not enough gold");
@@ -91,6 +92,10 @@ public class Store : MonoBehaviour
         if (item == ItemSelect.barrier)
         {
             return barrierPrefab;
+        }
+        else if (item == ItemSelect.tower1)
+        {
+            return tower1Prefab;
         }
 
         return null;

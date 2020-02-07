@@ -9,6 +9,7 @@ TagManager:
   - Node
   - Barrier
   - Spawn
+  - Enemy
   layers:
   - Default
   - TransparentFX

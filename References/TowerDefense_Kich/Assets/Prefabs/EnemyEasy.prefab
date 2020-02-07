@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 5906825951488762255}
   - component: {fileID: 5906825951488762254}
   - component: {fileID: 5906825951488762253}
-  - component: {fileID: 5906825951488762250}
+  - component: {fileID: 4501147180160825228}
   m_Layer: 0
   m_Name: EnemyEasy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +118,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 3
   m_ObstacleAvoidanceType: 2
---- !u!114 &5906825951488762250
+--- !u!114 &4501147180160825228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5906825951488762252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eebe25ae607a5f4185a689b5823d82b, type: 3}
+  m_Script: {fileID: 11500000, guid: 04de10c4e343cef49b6c78bc21ec223f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 3
+  speed: 5

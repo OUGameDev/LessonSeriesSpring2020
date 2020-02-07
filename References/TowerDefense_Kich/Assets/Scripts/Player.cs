@@ -79,6 +79,11 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    public void LootEnemy(int gold)
+    {
+        currentGold += gold;
+    }
+
     public int GetLives()
     {
         return currentHealth;

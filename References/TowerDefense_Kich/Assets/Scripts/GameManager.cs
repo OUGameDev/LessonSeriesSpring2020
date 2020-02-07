@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : UnityEngine.MonoBehaviour
+// Class handles the beginning and the ending of game
+
+public class GameManager : MonoBehaviour
 {
+    // True when player has no move lives left and game is over
     public static bool isGameOver;
 
     private void Start()
